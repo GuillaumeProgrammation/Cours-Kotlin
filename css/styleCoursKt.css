@@ -1,0 +1,184 @@
+html, body{
+    margin : 0;
+    padding : 0;
+    height : 100%;
+    overflow-x: hidden;
+}
+
+/*
+Logo Kotlin
+*/
+.logo{
+    position: absolute;
+    left: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#imgLogo{
+    width: 10%;
+}
+
+#textImgLogo{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 40px;
+    color: black;
+}
+
+/*
+Titre
+*/
+.blocTitre{
+    background-color: #F4CFDF;
+    height: 10%;
+
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#titre{
+    font-family: 'JetBrains Mono', monospace;
+    color: black;
+    font-size: 40px;
+}
+
+/*
+Sommaire
+*/
+
+#sommaireOuvert, #sommaireFerme{
+    background-color: #F4CFDF;
+    font-size: 20px;
+    border : none;
+    position: fixed;
+    z-index: 100;
+
+  transition: 
+    opacity 0.2s ease,    /* Transition douce de l'opacité (fondu) */
+    transform 0.5s ease;  /* Transition du déplacement (glissement) */
+}
+
+#sommaireOuvert{
+    border-radius: 0px 10px 10px 0px;
+    top : 10.5%;
+    font-family: 'JetBrains Mono', monospace;
+
+    /* État initial : invisible et décalé à gauche */
+    opacity: 0;              /* Complètement transparent */
+    transform: translateX(-8px); /* Décalé de 8px vers la gauche */
+}
+
+#sommaireOuvert.hidden, #sommaireFerme.hidden{
+    pointer-events: none;
+}
+
+
+#sommaireFerme{    
+    border-radius: 0px 10px 10px 0px;
+    position: fixed;
+    top : 10.5%;
+
+    opacity: 0;
+}
+
+/* Quand le bouton "Sommaire" n'a PAS la classe .hidden */
+#sommaireOuvert:not(.hidden) {
+    opacity: 1;
+    transform: translateX(0);
+     /* Retour à sa position normale */
+}
+
+#sommaireFerme:not(.hidden) {
+    opacity: 1;
+    transform: translateX(0); /* Retour à sa position normale */
+}
+/*
+Chapitre
+*/
+
+.blocChapitre{
+    position: fixed;
+    background-color: #8CACD3;
+    top: 10%;
+    left: 0;
+    width: 20%;
+    height: calc(100% - 10%);
+    overflow-y: auto;
+    transition: transform 0.3s ease-out; /* Uniquement sur transform */
+}
+
+.blocChapitre.hidden {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out; /* Uniquement sur transform */
+    opacity: 0;
+}
+
+.chapitre{
+    padding-top: 28px;
+}
+
+
+/*
+Gestion texte des chapitres
+*/
+.blocChapitre ul{
+    list-style: none;
+}
+
+.ulSousListe{
+    display: none;
+}
+
+.listeChap {
+    display: block;
+    background-color: #B6D8F2;
+    padding: 8px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.sousListe {
+    display: block;
+    margin-top: 5px;
+    padding: 5px;
+    background-color: #B6D8F2;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.chapitre > ul > li {
+    margin-bottom: 20px;
+}
+
+/*
+Contenu du cours
+*/
+
+#contenuCours{
+    background-color: white;
+    width: 80%;
+    
+    margin-left: 21%;
+    
+    height: calc(100vh - 10%); /* 100% de la vue - la hauteur du header */
+    overflow-y: auto; /* Active le scroll vertical si besoin */   
+    transition: transform 0.3s ease;
+    
+}
+
+#contenuCours.expand{
+    margin: 1.3%;
+    width: 100%;
+}
+
+
+/*
+IA
+*/
+
+/* Conserve le positionnement du reste de la page */
+.blocTitre, .blocChapitre, #sommaireOuvert, #sommaireFerme {
+    transform: none
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE html> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+
+	<head>
+		<meta charset="UTF-8"/> 
+		<title>PageCoursKotlin</title>
+		<meta name="author" content="Guillaume Depelchin"/>
+		<meta name="keywords" content="PageCoursKotlin"/>
+        <link rel="stylesheet" href="css/styleCoursKt.css">
+        <script src="JS/coursKt.js" defer></script>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+	</head>
+	
+	<body>
+        <div class="blocTitre">
+            <div class="logo">
+                <img src="images/Kotlin.png" alt="logo de Kotlin" id ="imgLogo" >
+                <span id="textImgLogo">Kotlin - Cours</span>
+            </div>
+        </div>
+
+        <button id="sommaireOuvert">☰ Sommaire</button>
+        <button id="sommaireFerme" class="hidden">☰</button>
+        
+        <div class="blocChapitre">
+            <div class="chapitre">
+                <ul>
+                    <li>
+                        <span id="decouvrir" class = "listeChap">Decouvrir le langage</span>
+                        <ul class="ulSousListe">
+                            <li><span id="histoire" class="sujet sousListe">Histoire</span></li>
+                            <li><span id="Compilation" class="sujet sousListe">Compilation</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span id="bases" class = "listeChap">Bases de Kotlin</span>
+                        <ul class="ulSousListe">
+                            <li><span id="Types" class="sujet sousListe">Les Types</span></li>
+                            <li><span id="structures de donnees" class="sujet sousListe">Les structures de donnees</span></li>
+                            <li><span id="ensembles" class="sujet sousListe">Les ensembles</span></li>
+                            <li><span id="FonctionsUtiles" class = "sujet sousListe">Fonctions utiles</span></li>
+                            
+                        </ul>
+                    </li>
+
+                    <li>
+                        <span id="GestionFichiers" class = "sujet listeChap">Gestion des fichiers</span>
+                    </li>
+                    
+                    <li>
+                        <span id="Lesclasses" class = "listeChap">Les classes</span>
+                        <ul class="ulSousListe">
+                            <li><span id="Classes" class="sujet sousListe">Classe et méthode</span></li>
+                            <li><span id="CoursHeritage" class="sujet sousListe">Heritage</span></li>
+                            <li><span id="classAbstraite" class="sujet sousListe">Classe abstraite</span></li>
+                            <li><span id="interface" class="sujet sousListe">Interface</span></li>
+                            <li><span id="Delegation" class = "sujet sousListe">Delegation</span></li>
+                            <li><span id="Object" class = "sujet sousListe">Objects</span></li>
+                            <li><span id="Sealed" class = "sujet sousListe">Sealed</span></li>
+                            <li><span id="Enum" class = "sujet sousListe">Enum</span></li>
+                            <li><span id="ValueClass" class = "sujet sousListe">Value</span></li>
+                            <li><span id="guideDecision" class = "sujet sousListe">Comment choisir ?</span></li>
+                            <li><span id="MemoClass" class = "sujet sousListe">Résumé des notions</span></li>
+
+                        </ul>
+                    </li>
+                    
+                    <li><span id="pileFile" class = "listeChap">Piles et Files</span>
+                        <ul class="ulSousListe">
+                            <li><span id="Piles" class="sujet sousListe">Piles</span></li>
+                            <li><span id="Files" class="sujet sousListe">Files</span></li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <span id="Graphes" class = "listeChap">Graphes</span>
+                        <ul class="ulSousListe">
+                            <li><span id="Graphes" class="sujet sousListe">Graphes</span></li>
+                            <li><span id="BFS" class="sujet sousListe">Parcours BFS</span></li>
+                            <li><span id="DFS" class="sujet sousListe">Parcours DFS</span></li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <span id="Arbres" class = "listeChap">Arbres</span>
+                        <ul class="ulSousListe">
+                            <li><span id="Arbres" class="sujet sousListe">Arbres</span></li>
+                            <li><span id="ArbresBi" class="sujet sousListe">Arbres binaires</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span id="FonctionsImportantes" class = "listeChap">Fonctions importantes</span>
+                        <ul class="ulSousListe">
+                             <li><span id="lambda" class="sujet sousListe">Lambda</span></li>
+                            <li><span id="map" class="sujet sousListe">Map</span></li>
+                            <li><span id="fold" class="sujet sousListe">Fold</span></li>
+                            <li><span id="filter" class="sujet sousListe">Filter</span></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <span id="FonctionsExtensions" class="listeChap">Fonctions d'extensions</span>
+                        <ul class="ulSousListe">
+                            <li><span id="let" class="sujet sousListe">Let</span></li>
+                            <li><span id="also" class="sujet sousListe">Also</span></li>
+                            <li><span id="apply" class="sujet sousListe">Apply</span></li>
+                            <li><span id="run" class="sujet sousListe">Run</span></li>
+                            <li><span id="with" class="sujet sousListe">With</span></li>
+                            <li><span id="resumeFonctionsExtensions" class="sujet sousListe">Resumé fonctions</span></li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <span id="Proprietes" class="listeChap">Proprietes</span>
+                        <ul class="ulSousListe">
+                            <li><span id="proprietes" class="sujet sousListe">Getter-Setter-Extension</span></li>
+                            <li><span id="delegationProp" class="sujet sousListe">Delegation proprietes</span></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <span id="PooDefinitions" class="sujet listeChap">POO - Definitions</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- IA -->
+        <div class="zoom-controls" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+            <button id="zoomIn">Zoom +</button>
+            <button id="zoomOut">Zoom -</button>
+            <button id="resetZoom">Reset</button>
+        </div>
+
+        <div id="contenuCours">
+            </div>
+	</body>
+
+</html>
