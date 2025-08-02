@@ -1,6 +1,6 @@
 ## Parcours en largeur (BFS - Breadth First Search)
 
-###### Principe
+### Principe
 
 - Explore **d’abord tous les voisins directs** d’un nœud avant de descendre plus loin dans le graphe.
 
