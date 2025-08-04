@@ -32,6 +32,8 @@ println(tripleQuotedString)
 // #answer = Paris
 ```
 
+---
+
 ## 2. `trimMargin()`
 
 ### Utilité

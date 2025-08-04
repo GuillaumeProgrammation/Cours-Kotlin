@@ -12,7 +12,6 @@ name = null  // OK, car String nullable
 
 var nonNullableName: String = "Kotlin"
 // nonNullableName = null  // Erreur de compilation
-
 ```
 
 #### Opérateur Elvis `?:` (opérateur de coalescence)
@@ -23,7 +22,6 @@ Permet de fournir une valeur par défaut si la variable est `null` :
 val name: String? = null
 val finalName = name ?: "Inconnu"  // Si name == null, finalName = "Inconnu"
 println(finalName)  // Affiche : Inconnu
-
 ```
 
 ---
@@ -51,7 +49,6 @@ fun inputInt(): Int {
         println("Entrée invalide. Veuillez entrer un entier.")
     }
 }
-
 ```
 
 ---
@@ -70,7 +67,6 @@ fun employeeById(id: Int): Employee? = when(id) {
 }
 
 fun salaryById(id: Int): Int = employeeById(id)?.salary ?: 0
-
 ```
 
 ---
@@ -93,7 +89,6 @@ if (value is String) {
 } else {
     println("Value is of another type")
 }
-
 ```
 
 ---
@@ -108,7 +103,6 @@ if (value is String) {
 fun printMessage(): Unit {
     println("Hello, Kotlin!")
 }
-
 ```
 
 ---
@@ -123,7 +117,6 @@ fun printMessage(): Unit {
 fun throwError(): Nothing {
     throw IllegalStateException("Erreur fatale")
 }
-
 ```
 
 ---
@@ -155,5 +148,4 @@ fun main() {
     }
     // throwError()  // Décommente pour tester l’exception
 }
-
 ```
