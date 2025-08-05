@@ -13,12 +13,36 @@ val squaredNumbers = numbers.map { it * it }
 println(squaredNumbers)  // [1, 4, 9, 16]
 ```
 
-**`it`** représente chaque élément de la liste.  
-**Retourne une nouvelle liste transformée.**
+- **`it`** représente chaque élément de la liste.  
+  **Retourne une nouvelle liste transformée.**
 
 ```kotlin
 val names = listOf("alice", "bob", "charlie")
 val uppercasedNames = names.map { it.uppercase() }
 
 println(uppercasedNames)  // [ALICE, BOB, CHARLIE]
+```
+
+---
+
+## `flatMap`
+
+- Transforme chaque élément en une collection, puis **aplatit** les résultats.
+
+```kotlin
+val input = listOf("abc", "de")
+val result = input.flatMap { it.toList() }
+// ['a', 'b', 'c', 'd', 'e']
+```
+
+- Autre exemple avec objets :
+
+```kotlin
+data class Person(val name: String, val phones: List<String>)
+val people = listOf(
+    Person("Alice", listOf("123", "456")),
+    Person("Bob", listOf("789"))
+)
+val allPhones = people.flatMap { it.phones }
+// ["123", "456", "789"]
 ```

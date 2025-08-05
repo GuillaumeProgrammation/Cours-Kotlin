@@ -4,9 +4,7 @@
 
 ## 1. `trimIndent()`
 
-### Utilité
-
-Supprime l'indentation commune minimale de toutes les lignes d’une chaîne multilignes. Pratique pour garder un code lisible tout en nettoyant les espaces superflus dans la chaîne.
+- Supprime l'indentation commune minimale de toutes les lignes d’une chaîne multilignes. Pratique pour garder un code lisible tout en nettoyant les espaces superflus dans la chaîne.
 
 ### Syntaxe
 
@@ -36,9 +34,7 @@ println(tripleQuotedString)
 
 ## 2. `trimMargin()`
 
-### Utilité
-
-Supprime l'indentation définie par un caractère de marge (par défaut `|` ou ici `#`).
+- Supprime l'indentation définie par un caractère de marge (par défaut `|` ou ici `#`).
 
 ### Syntaxe
 
@@ -64,28 +60,6 @@ println(tripleQuotedString)
 // answer = Paris
 ```
 
-# Le type `Nothing` en Kotlin
-
----
-
-## Utilité
-
-`Nothing` est un type spécial en Kotlin qui n’a **aucune valeur**. Il est utilisé pour indiquer qu’une fonction **ne retourne jamais normalement** (par exemple, elle lance une exception ou boucle infiniment).
-
-## Exemple d’utilisation
-
-```kotlin
-fun fail(message: String): Nothing {
-    throw IllegalArgumentException(message)
-}
-```
-
-### Exemple avec `Nothing` dans une expression
-
-```kotlin
-val value: String = getValue() ?: fail("Valeur manquante")
-```
-
 ---
 
 ## Génération aléatoire (`Random`)
@@ -95,19 +69,6 @@ val value: String = getValue() ?: fail("Valeur manquante")
 
 - `Random.nextInt(from, until)`  
   Génère un entier aléatoire dans l’intervalle `[from, until)`, c’est-à-dire inclusif sur la borne basse et exclusif sur la borne haute.
-
----
-
-## Fonctions utilitaires utiles
-
-- `joinToString(separator: String)`  
-  Transforme une collection en une chaîne en concaténant ses éléments avec un séparateur donné.
-
-```kotlin
-val fruits = listOf("Pomme", "Banane", "Cerise")
-val result = fruits.joinToString(", ")
-println(result)  // "Pomme, Banane, Cerise"
-```
 
 ---
 

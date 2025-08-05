@@ -107,19 +107,25 @@ fun printMessage(): Unit {
 
 ---
 
-### 6. `Nothing` — Type sans valeur
+#### 6. `Nothing`
 
-- Représente une valeur qui n’existe jamais.
+`Nothing` est un type spécial en Kotlin qui n’a **aucune valeur**. Il est utilisé pour indiquer qu’une fonction **ne retourne jamais normalement** (par exemple, elle lance une exception ou boucle infiniment).
 
-- Utilisé pour les fonctions qui ne terminent jamais normalement (ex. : exceptions, boucles infinies).
+## Exemple d’utilisation
 
 ```kotlin
-fun throwError(): Nothing {
-    throw IllegalStateException("Erreur fatale")
+fun fail(message: String): Nothing {
+    throw IllegalArgumentException(message)
 }
 ```
 
----
+### Exemple avec `Nothing` dans une expression
+
+```kotlin
+val value: String = getValue() ?: fail("Valeur manquante")
+```
+
+------
 
 ### Exemple complet résumé
 
