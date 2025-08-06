@@ -67,7 +67,7 @@ val (even, odd) = nums.partition { it % 2 == 0 }
 
 ---
 
-`joinToString(separator: String)`  
+**`joinToString(separator: String)`**
 
 - Transforme une collection en une chaîne en concaténant ses éléments avec un séparateur donné.
 

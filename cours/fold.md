@@ -31,7 +31,7 @@ Finalement, `fold` retourne la valeur **15**.
 
 La fonction **`fold`** commence avec le premier élément de la liste, puis elle applique la fonction binaire (ici, l'addition) à cet élément et au suivant. Ce processus se répète jusqu'à ce que tous les éléments aient été traités. À chaque itération, l'**accumulateur (`acc`)** reçoit la somme des valeurs traitées jusqu'à ce point.
 
-### Comparaison avec reduce : 
+### Comparaison avec reduce :
 
 #### reduce :
 

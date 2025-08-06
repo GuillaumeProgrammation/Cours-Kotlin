@@ -61,3 +61,36 @@ val sorted = people.sortedWith(compareByDescending { it.name.length })
 val mutableNums = mutableListOf(3, 1, 2)
 mutableNums.sort()  // mutableNums = [1, 2, 3]
 ```
+
+---
+
+## `intersect`
+
+```kotlin
+val result = set1.intersect(set2)
+setOf(1, 2, 3).intersect(setOf(2, 3, 4))  // [2, 3]
+```
+
+- Retourne les **éléments communs** aux deux ensembles.
+
+---
+
+**`union`**
+
+```kotlin
+val result = set1.union(set2)
+setOf(1, 2).union(setOf(2, 3))  // [1, 2, 3]
+```
+
+- Retourne tous les éléments des deux ensembles, **sans doublons**.
+
+---
+
+**`subtract`**
+
+```kotlin
+val result = set1.subtract(set2)
+setOf(1, 2, 3).subtract(setOf(2))  // [1, 3]
+```
+
+- Retourne les éléments de `set1` **absents de** `set2`.

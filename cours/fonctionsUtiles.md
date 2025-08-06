@@ -2,6 +2,16 @@
 
 ---
 
+## Récapitulatif des propriétés de longueur
+
+| Type                          | Propriété  |
+| ----------------------------- | ---------- |
+| `String`                      | `.length`  |
+| `List`, `Set`, `Map`, `Array` | `.size`    |
+| `Range`                       | `.count()` |
+
+---
+
 ## 1. `trimIndent()`
 
 - Supprime l'indentation commune minimale de toutes les lignes d’une chaîne multilignes. Pratique pour garder un code lisible tout en nettoyant les espaces superflus dans la chaîne.
@@ -82,4 +92,40 @@ try {
 } catch (e: ArithmeticException) {
     println("Erreur : division par zéro")
 }
+```
+
+---
+
+**`sequences`**
+
+```kotlin
+val seq = listOf(1, 2, 3).asSequence()
+// ou
+val seq = sequenceOf(1, 2, 3)
+```
+
+### Description
+
+- Structure **lazy** (paresseuse) pour traiter des données.
+
+- Les opérations intermédiaires (`map`, `filter`, etc.) ne sont **pas évaluées immédiatement**.
+
+- Optimise les performances en évitant les structures intermédiaires.
+
+### Opérations
+
+#### Intermédiaires (lazy)
+
+- `map`, `filter`, `take`, `distinct`, etc.
+
+#### Terminales (déclenchent l’évaluation)
+
+- `toList()`, `count()`, `first()`, `maxOrNull()`, etc.
+
+```kotlin
+val result = listOf(1, 2, 3, 4)
+    .asSequence()
+    .map { it * 2 }
+    .filter { it > 4 }
+    .toList()  // [6, 8]
 ```
