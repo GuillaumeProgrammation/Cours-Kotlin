@@ -46,75 +46,47 @@ public class DataStructuresExample {
         // =====================================
         // 1. List IMMUTABLE (équivalent List<T> Kotlin)
         // =====================================
-        System.out.println("1. Liste Immutable :");
-        List<Integer> immutableList = List.of(1, 2, 3);  // Java 9+
-        // Alternative pour versions antérieures :
-        // List<Integer> immutableList = Arrays.asList(1, 2, 3);
-
-        System.out.println("Liste immutable : " + immutableList);
-        System.out.println("Premier élément : " + immutableList.get(0));
+        List<Integer> immutableList = List.of(1, 2, 3);
 
         // immutableList.add(4); // ERREUR : UnsupportedOperationException
         // immutableList.set(0, 10); // ERREUR : modification interdite
 
-        System.out.println("Lecture autorisée, Modification interdite\n");
-
         // =====================================
         // 2. List MUTABLE (équivalent MutableList<T> Kotlin)
         // =====================================
-        System.out.println("2. Liste Mutable :");
         List<Integer> mutableList = new ArrayList<>(Arrays.asList(1, 2, 3));
 
         mutableList.add(4);           // Ajouter un élément
         mutableList.set(0, 10);       // Modifier le premier élément
         mutableList.remove(Integer.valueOf(2)); // Supprimer l'élément 2
 
-        System.out.println("Liste après modifications : " + mutableList);
-        System.out.println("Lecture ET modification autorisées\n");
-
         // =====================================
         // 3. ArrayList (équivalent ArrayList Kotlin)
         // =====================================
-        System.out.println("3. ArrayList :");
         ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 2, 3));
         arrayList.add(4);
-
-        System.out.println("ArrayList : " + arrayList);
-        System.out.println("Taille dynamique, optimisé pour ajouts en fin\n");
 
         // =====================================
         // 4. Array (équivalent Array<T> Kotlin)
         // =====================================
-        System.out.println("4. Tableau (Array) :");
         Integer[] array = {1, 2, 3};  // Taille fixe
         array[0] = 10;  // Modification OK
 
-        System.out.println("Tableau : " + Arrays.toString(array));
-        System.out.println("Taille fixe : " + array.length + " éléments");
-
         // Pas possible d'ajouter des éléments (taille fixe)
         // Pour redimensionner, il faut créer un nouveau tableau
-        System.out.println("Impossible d'ajouter des éléments (taille fixe)\n");
 
         // =====================================
         // 5. Set (équivalent Set<T> Kotlin)
         // =====================================
-        System.out.println("5. Set (sans doublons) :");
         Set<Integer> set = new HashSet<>(Arrays.asList(1, 2, 2, 3));
-
-        System.out.println("Set avec doublons supprimés : " + set);
 
         // Set mutable
         Set<Integer> mutableSet = new HashSet<>(Arrays.asList(1, 2, 3));
         mutableSet.add(4);
         mutableSet.remove(2);
-        System.out.println("Set après modifications : " + mutableSet);
 
         // Set immutable
-        Set<Integer> immutableSet = Set.of(1, 2, 3);  // Java 9+
-        System.out.println("Set immutable : " + immutableSet);
-
-        System.out.println("\n=== MÉTHODES PRINCIPALES ===");
+        Set<Integer> immutableSet = Set.of(1, 2, 3); 
         demonstrateMethods();
 
     }

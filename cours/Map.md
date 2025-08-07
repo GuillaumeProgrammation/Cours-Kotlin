@@ -50,15 +50,11 @@ public class DataStructuresExample {
         // =====================================
         // 6. MAP - Collections Associées (équivalent Map<K,V> Kotlin)
         // =====================================
-        System.out.println("\n6. Map (Collections clé-valeur) :");
 
         // Map IMMUTABLE (équivalent mapOf Kotlin)
         Map<Integer, String> immutableMap = Map.of(1, "Alice", 2, "Bob");
-        System.out.println("Map immutable : " + immutableMap);
-        System.out.println("Accès par clé map.get(1) : " + immutableMap.get(1));
 
         // immutableMap.put(3, "Charlie"); // ERREUR : modification interdite
-        System.out.println("✅ Lecture autorisée, ❌ Modification interdite\n");
 
         // Map MUTABLE (équivalent mutableMapOf Kotlin)
         Map<Integer, String> students = new HashMap<>();
@@ -74,10 +70,6 @@ public class DataStructuresExample {
         // Supprimer un élément
         students.remove(1);
 
-        System.out.println("Map après modifications : " + students);
-        System.out.println("✅ Lecture ET modification autorisées\n");
-
-        System.out.println("\n=== MÉTHODES PRINCIPALES ===");
         demonstrateMapMethods();
     }
 ```
