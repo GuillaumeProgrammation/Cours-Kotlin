@@ -73,6 +73,7 @@ public class DataStructuresExample {
         demonstrateMapMethods();
     }
 ```
+---
 
 ```java
 public static void demonstrateMapMethods() {

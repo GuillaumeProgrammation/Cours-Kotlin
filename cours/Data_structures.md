@@ -91,6 +91,7 @@ public class DataStructuresExample {
 
     }
 ```
+---
 
 ```java
     public static void demonstrateMethods() {
