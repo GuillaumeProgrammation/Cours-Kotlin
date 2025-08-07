@@ -1,36 +1,50 @@
 # Cours Kotlin : Délégation de Propriétés avec `lazy` et `observable`
 
-## Introduction à la Délégation de Propriétés
+---
 
-La délégation de propriétés est un mécanisme puissant en Kotlin qui permet de déléguer la gestion des getters/setters à un autre objet. Cela permet :
+## Introduction à la Délégation de Propriétés en Kotlin
 
-- De réduire le code boilerplate
+La délégation de propriétés est un mécanisme puissant qui permet de **déléguer la gestion des accesseurs (`get`/`set`) d’une propriété à un autre objet**. Cela offre plusieurs avantages :
 
-- D'ajouter des comportements transversaux (logging, validation, etc.)
+- **Réduction du code boilerplate** : éviter d’écrire à chaque fois des getters/setters similaires.
 
-- De mettre en œuvre des motifs comme l'initialisation paresseuse
+- **Ajout de comportements transversaux** : logging, validation, synchronisation, lazy initialization, etc.
 
-## 1. Délégation Personnalisée
+- **Implémentation simple de patterns complexes** (ex. `lazy`, observable, vetoable).
+
+---
+
+## 1. Délégation personnalisée - sans interface
 
 ### Principe
 
-Créez vos propres délégats en implémentant les opérateurs :
+Pour créer un délégat personnalisé, il faut définir une classe qui implémente les opérateurs suivants :
 
-- `getValue()` pour les propriétés en lecture seule (`val`)
+- `operator fun getValue(thisRef: R, property: KProperty<*>): T` pour les propriétés en lecture (val ou var).
 
-- `setValue()` pour les propriétés mutables (`var`)
+- `operator fun setValue(thisRef: R, property: KProperty<*>, value: T)` pour les propriétés mutables (var).
 
-### Exemple : Logger de Propriété
+---
+
+### Paramètres importants
+
+- `thisRef` : instance de la classe propriétaire de la propriété (le récepteur).
+
+- `property` : métadonnées sur la propriété (nom, type, annotations).
+
+- `value` (dans `setValue`) : nouvelle valeur assignée.
 
 ```kotlin
+// value est un attribut !
 class LoggerDelegate<T>(private var value: T) {
+
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        println("Accès à ${property.name} = $value")
+        println("Accès à la propriété '${property.name}' avec la valeur : $value")
         return value
     }
-    
+
     operator fun setValue(thisRef: Any?, property: KProperty<*>, newValue: T) {
-        println("Modification de ${property.name}: $value → $newValue")
+        println("Modification de la propriété '${property.name}': $value → $newValue")
         value = newValue
     }
 }
@@ -42,13 +56,224 @@ class User {
 
 fun main() {
     val user = User()
-    user.name = "Alice"  // Modification de name:  → Alice
-    user.age = 30        // Modification de age: 0 → 30
-    println(user.name)   // Accès à name = Alice \n Alice
+    user.name = "Alice"  
+// Affiche : Modification de la propriété 'name': → Alice
+    user.age = 30       
+ // Affiche : Modification de la propriété 'age': 0 → 30
+    println(user.name)   
+// Affiche : Accès à la propriété 'name' avec la valeur : Alice                         
+// Puis affiche : Alice
+}
+
+```
+
+## Utilisations courantes
+
+- **Lazy initialization** : initialiser une valeur uniquement au premier accès.
+
+- **Validation** : vérifier une valeur avant l’assignation.
+
+- **Logging** : tracer les accès et modifications.
+
+- **Observable** : notifier un changement.
+
+---
+
+### Syntaxe d’usage
+
+```kotlin
+class MyClass {
+    var prop: Type by DelegateClass()
 }
 ```
 
- ---
+Lors de l’accès ou la modification de `prop`, Kotlin appelle respectivement `getValue` et `setValue` du délégat `DelegateClass`.
+
+---
+
+### Exemple 2 : Délégation personnalisée `EffectiveDate` - avec interface
+
+### Objectif
+
+Stocker une propriété `MyDate` mais uniquement sous forme de timestamp (long), en utilisant la délégation.
+
+```kotlin
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
+
+data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int)
+
+fun MyDate.toMillis(): Long {
+    val c = java.util.Calendar.getInstance()
+    c.set(year, month, dayOfMonth)
+    return c.timeInMillis
+}
+
+fun Long.toDate(): MyDate {
+    val c = java.util.Calendar.getInstance()
+    c.timeInMillis = this
+    return MyDate(c.get(java.util.Calendar.YEAR), c.get(java.util.Calendar.MONTH), c.get(java.util.Calendar.DATE))
+}
+
+```
+
+### Délégué :
+
+```kotlin
+class EffectiveDate<R> : ReadWriteProperty<R, MyDate> {
+    private var timeInMillis: Long? = null
+
+    override fun getValue(thisRef: R, property: KProperty<*>): MyDate {
+        return timeInMillis?.toDate() ?: error("Propriété non initialisée")
+    }
+
+    override fun setValue(thisRef: R, property: KProperty<*>, value: MyDate) {
+        timeInMillis = value.toMillis()
+    }
+}
+
+```
+
+- `R` → le type de l’objet qui possède la propriété (ex : `D`)
+
+- `T` → le type de la propriété (ex : `MyDate`)
+
+```kotlin
+class D {
+    var date: MyDate by EffectiveDate()
+}
+
+fun main() {
+    val d = D()
+    d.date = MyDate(2023, 7, 22)
+    println(d.date)  // affiche MyDate(year=2023, month=7, dayOfMonth=22)
+}
+```
+
+- **Modification `d.date = ...` → convertit `MyDate` → `Long` stocké.**
+
+- **Accès `d.date` → convertit `Long` → `MyDate` retourné.**
+
+À l’appel de `setValue` :
+
+- `thisRef` vaut `d` (l’instance `D`)
+
+- `property` décrit la propriété `date` (nom, type...)
+
+- `value` vaut `MyDate(2025, 7, 15)`, la nouvelle valeur assignée à `date`
+
+---
+
+## `ReadWriteProperty<R, MyDate>` — Définition
+
+C’est **une interface Kotlin générique** qui représente un **délégué de propriété mutable** (donc avec `getValue` **et** `setValue`).
+
+Elle est définie comme ceci :
+
+```kotlin
+interface ReadWriteProperty<in R, T> {
+    operator fun getValue(thisRef: R, property: KProperty<*>): T
+    operator fun setValue(thisRef: R, property: KProperty<*>, value: T)
+}
+```
+
+### Paramètres génériques
+
+- `R` : le **type du propriétaire de la propriété** (ex : une classe comme `D`)
+
+- `T` : le **type de la propriété** déléguée (ex : `MyDate`)
+
+Donc :
+
+```kotlin
+ReadWriteProperty<R, MyDate>
+```
+
+- "Je suis un délégué capable de gérer une propriété de type `MyDate` qui appartient à un objet de type `R`."
+
+---
+
+## `ReadOnlyProperty<R, T>` — Définition
+
+C’est **une interface Kotlin générique** qui représente un **délégué de propriété en lecture seule** (donc avec uniquement `getValue`, utilisable avec `val`).
+
+Elle est définie comme ceci :
+
+```kotlin
+interface ReadOnlyProperty<in R, out T> {
+    operator fun getValue(thisRef: R, property: KProperty<*>): T
+}
+```
+
+### Paramètres génériques
+
+- `R` : le **type du propriétaire de la propriété** (par ex. une classe comme `User`, `D`, etc.)
+
+- `T` : le **type de la propriété déléguée** (ex : `String`, `Int`, `MyDate`, etc.)
+
+Donc : 
+
+```kotlin
+ReadOnlyProperty<R, String>
+```
+
+- "Je suis un délégué qui fournit la valeur d’une propriété de type `String` appartenant à un objet de type `R`, mais je ne la modifie pas."
+
+### Exemple
+
+```kotlin
+import kotlin.properties.ReadOnlyProperty
+import kotlin.reflect.KProperty
+
+class ConstantDelegate<T>(private val value: T) : ReadOnlyProperty<Any?, T> {
+    override fun getValue(thisRef: Any?, property: KProperty<*>): T {
+        println("Lecture de '${property.name}'")
+        return value
+    }
+}
+
+class Config {
+    val version: String by ConstantDelegate("1.0.0")
+}
+
+fun main() {
+    val c = Config()
+    println(c.version) // Affiche "Lecture de 'version'" puis "1.0.0"
+}
+
+```
+
+### Utilisation
+
+- Pour encapsuler un comportement de **calcul à la volée**, **cache**, **valeurs constantes**, ou **accès à des données** sans mutation.
+
+- Compatible uniquement avec `val`. Pour `var`, utilisez `ReadWriteProperty`.
+
+---
+
+### Kotlin autorise deux façons d’écrire un délégué :
+
+1. **Implémenter une interface standard** :
+   
+   - `ReadOnlyProperty<R, T>` → si la propriété est en `val`
+   
+   - `ReadWriteProperty<R, T>` → si la propriété est en `var`
+
+2. **Fournir directement deux fonctions opérateurs** :
+   
+   - `operator fun getValue(...)`
+   
+   - `operator fun setValue(...)`
+
+**C’est ce que fait `LoggerDelegate`** : il fournit **directement** les deux opérateurs, sans implémenter d'interface.
+
+Contrairement à **`EffectiveDate`** qui implémente l'interface de `ReadWriteProperty.`
+
+Si tu veux un **délégué réutilisable dans plusieurs classes avec un typage fort**, alors **implémenter l'interface** est plus adapté.
+
+---
+
+
 
 ## 2. Délégation `lazy` : Initialisation Paresseuse
 
@@ -81,7 +306,7 @@ fun checkAppServer(): Boolean {
 
 fun main() {
     val isAppServerHealthy by lazy { checkAppServer() }
-    
+
     println("Début du programme")
     if (isAppServerHealthy) { // L'initialisation se fait ici
         println("Server healthy")
@@ -196,10 +421,10 @@ class Budget(val totalBudget: Int) {
         when {
             newValue < totalBudget * 0.2 -> 
                 println("Warning: Budget bas ($newValue)")
-                
+
             newValue > oldValue -> 
                 println("Budget augmenté: $oldValue → $newValue")
-                
+
             newValue < oldValue -> 
                 println("Budget diminué: $oldValue → $newValue")
         }
@@ -260,5 +485,3 @@ fun main() {
 - `lazy` crée un **getter** avec initialisation différée.
 
 - `observable` crée un **getter et setter** qui exécute une action à chaque modification.
-
-
