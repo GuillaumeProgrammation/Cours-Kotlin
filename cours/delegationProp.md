@@ -1,4 +1,4 @@
-# Cours Kotlin : Délégation de Propriétés avec `lazy` et `observable`
+# Cours Kotlin : Délégation de Propriétés
 
 ---
 
@@ -64,7 +64,6 @@ fun main() {
 // Affiche : Accès à la propriété 'name' avec la valeur : Alice                         
 // Puis affiche : Alice
 }
-
 ```
 
 ## Utilisations courantes
@@ -114,7 +113,6 @@ fun Long.toDate(): MyDate {
     c.timeInMillis = this
     return MyDate(c.get(java.util.Calendar.YEAR), c.get(java.util.Calendar.MONTH), c.get(java.util.Calendar.DATE))
 }
-
 ```
 
 ### Délégué :
@@ -131,7 +129,6 @@ class EffectiveDate<R> : ReadWriteProperty<R, MyDate> {
         timeInMillis = value.toMillis()
     }
 }
-
 ```
 
 - `R` → le type de l’objet qui possède la propriété (ex : `D`)
@@ -240,7 +237,6 @@ fun main() {
     val c = Config()
     println(c.version) // Affiche "Lecture de 'version'" puis "1.0.0"
 }
-
 ```
 
 ### Utilisation
@@ -272,8 +268,6 @@ Contrairement à **`EffectiveDate`** qui implémente l'interface de `ReadWritePr
 Si tu veux un **délégué réutilisable dans plusieurs classes avec un typage fort**, alors **implémenter l'interface** est plus adapté.
 
 ---
-
-
 
 ## 2. Délégation `lazy` : Initialisation Paresseuse
 
@@ -485,3 +479,39 @@ fun main() {
 - `lazy` crée un **getter** avec initialisation différée.
 
 - `observable` crée un **getter et setter** qui exécute une action à chaque modification.
+
+--- 
+
+## Résumé des différences entre `get` et `getValue`
+
+| Aspect         | `get/set`                     | `getValue/setValue`                |
+| -------------- | ----------------------------- | ---------------------------------- |
+| **Usage**      | Accès indexé `obj[key]`       | Délégation `val prop by delegate`  |
+| **Syntaxe**    | `obj[index]`                  | `val prop by obj`                  |
+| **Paramètres** | `(index)`                     | `(thisRef, property)`              |
+| **Objectif**   | Navigation dans une structure | Gestion du stockage de propriétés  |
+| **Exemples**   | List, Map, Array              | lazy, observable, custom delegates |
+
+## En une phrase
+
+- **`get/set`** = "Comment accéder aux éléments **DANS** cet objet"
+- **`getValue/setValue`** = "Comment cet objet peut gérer des propriétés **D'AUTRES** objets"
+
+### Exemple :
+
+```kotlin
+class Matrix(private val data: Array<IntArray>) {
+
+    operator fun get(row: Int, col: Int): Int {  // Nouvel opérateur
+        return data[row][col]
+    }
+
+    operator fun set(row: Int, col: Int, value: Int) {
+        data[row][col] = value
+    }
+}
+
+val matrix = Matrix(arrayOf(intArrayOf(1, 2), intArrayOf(3, 4)))
+println(matrix[0, 1])  // 2
+matrix[0, 1] = 5
+```
