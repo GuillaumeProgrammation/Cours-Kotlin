@@ -1,11 +1,14 @@
 ## Arbres binaires
 
 ### Définition
+
 Un **arbre binaire** est un type particulier d’arbre où chaque nœud a **au plus deux enfants** :
+
 - Un **enfant gauche**,
 - Un **enfant droit**.
 
 ### Représentation en Kotlin
+
 ```kotlin
 class Node(val value : Int
     var left:  Node?  = null
@@ -13,9 +16,10 @@ class Node(val value : Int
 )
 ```
 
-### 3. Arbres Binaires de Recherche (ABR ou BST)
+### 1. Arbres Binaires de Recherche (ABR ou BST)
 
 ### Définition
+
 Un arbre binaire de recherche est un arbre binaire ordonné :
 
 - Tous les nœuds du sous-arbre gauche ont une valeur strictement inférieure à celle du nœud parent.
@@ -26,9 +30,7 @@ Un arbre binaire de recherche est un arbre binaire ordonné :
 Permet des opérations efficaces :
 
 - Insertion,
-
 - Recherche,
-
 - Suppression.
 
 Exemple (structure) :
@@ -41,7 +43,7 @@ Exemple (structure) :
   1   6    14
 ```
 
-### Representation d'une classe Node : 
+### Representation d'une classe Node :
 
 ```kotlin
 fun main(){
