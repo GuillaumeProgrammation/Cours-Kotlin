@@ -34,7 +34,6 @@ Kotlin permet de redéfinir le comportement des opérateurs (`+`, `-`, `<`, `[]`
 ### Exemple : `+`
 
 ```kotlin
-
 data class Point(val x: Int, val y: Int) {
     operator fun plus(other: Point): Point {
         return Point(x + other.x, y + other.y)
@@ -125,7 +124,6 @@ Permet de définir un ordre entre objets (ex. pour trier ou comparer).
 interface Comparable<T> {
     operator fun compareTo(other: T): Int
 }
-
 ```
 
 ```kotlin
@@ -142,7 +140,6 @@ data class MyDate(val year: Int, val month: Int, val day: Int) : Comparable<MyDa
 val d1 = MyDate(2025, 8, 1)
 val d2 = MyDate(2025, 8, 4)
 println(d1 < d2)  // true
-
 ```
 
 ---
@@ -162,7 +159,6 @@ interface Iterator<T> {
 interface Iterable<T> {
     operator fun iterator(): Iterator<T>
 }
-
 ```
 
 ```kotlin
@@ -179,7 +175,6 @@ class Countdown(val start: Int) : Iterable<Int> {
 for (i in Countdown(3)) {
     println(i)  // Affiche : 3, 2, 1, 0
 }
-
 ```
 
 ---
@@ -349,5 +344,83 @@ class Grille(val taille: Int) {
             return Grille(taille)
         }
     }
+}
+```
+
+---
+
+## Constructor :
+
+### 1. **Constructeur primaire**
+
+- Défini directement après le nom de la classe.
+
+- Sert à déclarer et initialiser les propriétés principales.
+
+- Peut contenir des `val` ou `var` pour créer directement des propriétés.
+
+```kotlin
+class User(val name: String, var age: Int)
+```
+
+---
+
+## 2. **Constructeurs secondaires**
+
+- Définis avec le mot-clé `constructor`.
+
+- Peuvent appeler le constructeur primaire avec `: this(...)`.
+
+- Utiles pour proposer plusieurs façons de construire l’objet.
+
+```kotlin
+class User(val name: String, var age: Int) {
+    // Constructeur secondaire
+    constructor(name: String) : this(name, 0)
+}
+```
+
+---
+
+### Exemple complet :
+
+```kotlin
+class SmartDevice(val name: String, val category: String) {
+    var deviceStatus: String = "online"
+        get() = field
+        set(value) {
+            field = when (value.lowercase()) {
+                "online", "offline", "unknown" -> value.lowercase()
+                else -> "unknown"
+            }
+        }
+
+    constructor(name: String, category: String, statusCode: Int) : this(name, category) {
+        deviceStatus = when (statusCode) {
+            0 -> "offline"
+            1 -> "online"
+            else -> "unknown"
+        }
+    }
+}
+```
+
+```kotlin
+fun main() {
+    val lamp = SmartDevice("Smart Lamp", "Lighting")
+    println("${lamp.name} -> ${lamp.deviceStatus}")  
+    // "Smart Lamp -> online" (valeur par défaut)
+
+    val thermostat = SmartDevice("Thermostat", "Heating", 0)
+    println("${thermostat.name} -> ${thermostat.deviceStatus}")  
+    // "Thermostat -> offline" (via statusCode = 0)
+
+    thermostat.deviceStatus = "ONLINE"
+    println("${thermostat.name} -> ${thermostat.deviceStatus}")  
+    // "Thermostat -> online" (setter normalise en lowercase)
+
+    thermostat.deviceStatus = "invalid"
+    println("${thermostat.name} -> ${thermostat.deviceStatus}")  
+    // "Thermostat -> unknown" (setter force valeur valide)
 }
 ```

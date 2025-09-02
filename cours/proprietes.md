@@ -52,6 +52,23 @@ var age: Int = 0
     }
 ```
 
+- value → la nouvelle valeur passée au setter (celle qu’on essaie d’assigner).
+
+- field → le backing field : c’est l’emplacement mémoire où la valeur de la propriété est réellement stockée.
+
+#### En résumé :
+
+```kotlin
+obj.prop = 10
+
+// value = 10 (la valeur qu’on essaye de mettre).
+
+// si accepté, le setter fait field = value, donc field devient 10.
+
+```
+- Quand tu fais println(obj.prop) :
+
+  - le getter est appelé → il renvoie field (la valeur actuellement stockée)
 ---
 
 ## 3. Exemple avec `field` et `value` (repris de ton code) :

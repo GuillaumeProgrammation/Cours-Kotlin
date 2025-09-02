@@ -29,9 +29,9 @@
 ```kotlin
 abstract class Animal(var name: String) {
     abstract var origin: String  // Propriété abstraite → doit être implémentée
-    
+
     abstract fun makeSound()     // Méthode abstraite → doit être implémentée
-    
+
     fun introduce() {            // Méthode concrète → héritée directement
         println("Hi I'm $name from $origin!")
     }
@@ -53,7 +53,7 @@ class Chat(name: String) : Animal(name) {
 ```kotlin
 fun main() {
     val animaux = listOf(Chien("Rex"), Chat("Félix"))
-    
+
     animaux.forEach {
         it.introduce()   // Méthode concrète de Animal
         it.makeSound()   // Implémentation spécifique
@@ -73,3 +73,7 @@ fun main() {
 2. Le constructeur parent doit être appelé avec `: Parent(param)`
 
 3. Les méthodes à redéfinir nécessitent `override`
+
+---
+
+## Constructor :
